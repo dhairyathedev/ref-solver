@@ -36,7 +36,7 @@ def row_echelon_form(matrix):
             factor = matrix[row, col]
             if factor != 0:
                 matrix[row] -= factor * matrix[col]
-                steps.append(f"Subtract {factor} times row {col + 1} from row {row + 1}:")
+                steps.append(f"Subtract {Fraction(factor).limit_denominator()} times row {col + 1} from row {row + 1}:")
 
     return matrix, steps
 
