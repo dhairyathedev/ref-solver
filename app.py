@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+from fractions import Fraction
 import numpy as np
 
 app = Flask(__name__)
@@ -28,7 +29,7 @@ def row_echelon_form(matrix):
         pivot_element = matrix[col, col]
         if pivot_element != 1:
             matrix[col] /= pivot_element
-            steps.append(f"Scale row {col + 1} by {1 / pivot_element}:")
+            steps.append(f"Scale row {col + 1} by {Fraction(1 / pivot_element).limit_denominator()}:")
 
         # Eliminate all entries below the pivot
         for row in range(col + 1, m):
