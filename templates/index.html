@@ -6,32 +6,68 @@
 <body>
     <h1>Row Echelon Form</h1>
     <form method="POST">
-        <label for="matrix">Enter the matrix (as a Python list of lists):</label>
-        <input type="text" id="matrix" name="matrix" required>
+        <label for="rows">Number of Rows:</label>
+        <input type="number" id="rows" name="rows" required>
+        <br>
+        <label for="cols">Number of Columns:</label>
+        <input type="number" id="cols" name="cols" required>
+        <br>
+        <h2>Enter the matrix:</h2>
+        <table id="matrix-table">
+</table>
         <button type="submit">Submit</button>
     </form>
+
+    <!-- Add this block to display error messages -->
+    {% if error_message %}
+        <p style="color: red;">{{ error_message }}</p>
+    {% endif %}
+
     <h2>Input Matrix:</h2>
-    <pre>
-    {% for row in matrix %}
-        {{ row }}
-    {% endfor %}
-    </pre>
+    <pre>{{ matrix }}</pre>
     <h2>Row Echelon Form:</h2>
-    <pre>
-    {% for row in matrix_ref %}
-        {{ row }}
-    {% endfor %}
-    </pre>
+    <pre>{{ matrix_ref }}</pre>
     <h2>Row Echelon Form Steps:</h2>
     <ol>
         {% for step in steps %}
             <li>{{ step }}</li>
         {% endfor %}
     </ol>
-<!-- Add this block to display error messages -->
-{% if error_message %}
-    <p style="color: red;">{{ error_message }}</p>
-{% endif %}
+<script>
+    // Function to update the matrix table based on user input
+    function updateMatrixTable() {
+        // Get the values of rows and cols from the input fields
+        var rows = parseInt(document.getElementById("rows").value);
+        var cols = parseInt(document.getElementById("cols").value);
+
+        // Get the matrix table element
+        var matrixTable = document.getElementById("matrix-table");
+
+        // Clear the current content of the table
+        matrixTable.innerHTML = "";
+
+        // Create rows and cells based on user input
+        for (var i = 0; i < rows; i++) {
+            var row = matrixTable.insertRow(i);
+            for (var j = 0; j < cols; j++) {
+                var cell = row.insertCell(j);
+                var input = document.createElement("input");
+                input.type = "text";
+                input.id = "element_" + i + "_" + j;
+                input.name = "element_" + i + "_" + j;
+                input.required = true;
+                cell.appendChild(input);
+            }
+        }
+    }
+
+    // Call the updateMatrixTable function when the page loads
+    window.onload = updateMatrixTable;
+
+    // Call the updateMatrixTable function whenever the rows and cols inputs change
+    document.getElementById("rows").addEventListener("input", updateMatrixTable);
+    document.getElementById("cols").addEventListener("input", updateMatrixTable);
+</script>
 
 </body>
 </html>

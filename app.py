@@ -48,21 +48,30 @@ def index():
         [7, 20, 12]
     ], dtype=float)
 
-    if request.method == "POST":
-        # Get the matrix as a string from the form input
-        matrix_str = request.form["matrix"]
+    # Initialize rows and cols with default values
+    rows = matrix.shape[0]
+    cols = matrix.shape[1]
 
+    if request.method == "POST":
         try:
-            # Parse the matrix string as a Python list of lists and convert it to a NumPy array
-            matrix = np.array(eval(matrix_str), dtype=float)
+            rows = int(request.form["rows"])
+            cols = int(request.form["cols"])
+
+            matrix = np.zeros((rows, cols), dtype=float)
+
+            for i in range(rows):
+                for j in range(cols):
+                    key = f"element_{i}_{j}"
+                    matrix[i][j] = float(request.form[key])
+
         except Exception as e:
-            error_message = f"Error parsing matrix: {str(e)}"
+            error_message = f"Error processing matrix: {str(e)}"
             return render_template("index.html", matrix=matrix, error_message=error_message)
 
     matrix_copy = matrix.copy()
     matrix_ref, steps = row_echelon_form(matrix_copy)
 
-    return render_template("index.html", matrix=matrix, matrix_ref=matrix_ref, steps=steps)
+    return render_template("index.html", matrix=matrix, matrix_ref=matrix_ref, steps=steps, rows=rows, cols=cols)
 
 
 if __name__ == "__main__":
