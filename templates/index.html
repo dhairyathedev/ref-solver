@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Row Echelon Form</title>
+</head>
+<body>
+    <h1>Row Echelon Form</h1>
+    <form method="POST">
+        <label for="matrix">Enter the matrix (as a Python list of lists):</label>
+        <input type="text" id="matrix" name="matrix" required>
+        <button type="submit">Submit</button>
+    </form>
+    <h2>Input Matrix:</h2>
+    <pre>
+    {% for row in matrix %}
+        {{ row }}
+    {% endfor %}
+    </pre>
+    <h2>Row Echelon Form:</h2>
+    <pre>
+    {% for row in matrix_ref %}
+        {{ row }}
+    {% endfor %}
+    </pre>
+    <h2>Row Echelon Form Steps:</h2>
+    <ol>
+        {% for step in steps %}
+            <li>{{ step }}</li>
+        {% endfor %}
+    </ol>
+<!-- Add this block to display error messages -->
+{% if error_message %}
+    <p style="color: red;">{{ error_message }}</p>
+{% endif %}
+
+</body>
+</html>
