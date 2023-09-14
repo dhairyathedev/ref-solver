@@ -28,7 +28,7 @@ def row_echelon_form(matrix):
         pivot_element = matrix[col, col]
         if pivot_element != 1:
             matrix[col] /= pivot_element
-            steps.append(f"Scale row {col + 1} by {1 / (1 / pivot_element)}:")
+            steps.append(f"Scale row {col + 1} by {1 / pivot_element}:")
 
         # Eliminate all entries below the pivot
         for row in range(col + 1, m):
